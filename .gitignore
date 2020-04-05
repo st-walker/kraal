@@ -33,3 +33,8 @@
 
 # Don't commit build files
 build/*
+
+
+cmake_install.cmake
+compile_commands.json
+crawler-spec.org
