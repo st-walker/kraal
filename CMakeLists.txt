@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16.2)
 
+option(crawler_BUILD_TESTS "Build the crawl tests." ON)
 
 
 project(paracrawler
@@ -45,3 +46,9 @@ target_link_libraries(para
 add_executable(parax paracrawler.cpp)
 
 target_link_libraries(parax PRIVATE para)
+
+if (crawler_BUILD_TESTS)
+  message(STATUS "Configuring tests")
+  enable_testing()
+  add_subdirectory(test)
+endif()
