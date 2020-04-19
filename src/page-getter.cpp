@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <string>
+#include <cstring>
 
 #include <curl/curl.h>
 
 #include "page-getter.h"
 
-para::PageGetter::PageGetter() { curl = curl_easy_init(); }
 
-para::PageGetter::~PageGetter() { curl_easy_cleanup(curl); }
+kraal::PageGetter::PageGetter() { curl = curl_easy_init(); }
+
+kraal::PageGetter::~PageGetter() { curl_easy_cleanup(curl); }
 
 static size_t writer(char *ptr, size_t size, size_t nmemb, std::string *data) {
 
@@ -18,7 +20,7 @@ static size_t writer(char *ptr, size_t size, size_t nmemb, std::string *data) {
   return size * nmemb;
 }
 
-std::string para::PageGetter::get(std::string address) {
+std::string kraal::PageGetter::get(std::string address) {
 
   CURLcode res;
   std::string buffer;

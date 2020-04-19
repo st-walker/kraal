@@ -8,24 +8,26 @@
 
 #include "page-getter.h"
 
-namespace para {
+namespace kraal {
 
 class Crawler {
 public:
-  Crawler(std::string seed);
+  Crawler() = default;
   void crawl();
-  void print();
+
+  inline int url_count() const { return 0; }
+  void add_url(std::string) {};
+  // void pop_url() {urls_}/
 
 private:
-  std::string seed_;
   std::queue<std::string> urls_;
 
-  PageGetter page_getter_;
+  // PageGetter page_getter_;
 
-  void push_links(GumboNode *node);
-  std::string parse_link(const std::string &);
-  void search_for_links(GumboNode *node);
+  // void push_links(GumboNode *node);
+  // std::string parse_link(const std::string &);
+  // void search_for_links(GumboNode *node);
 };
 
-} // namespace para
+} // namespace kraal
 #endif /* CRAWLER_H */

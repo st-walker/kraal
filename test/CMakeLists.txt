@@ -1,18 +1,15 @@
 
-set(SOURCES
-  main.cpp
-  page-test.cpp)
+add_executable(
+    unit_tests
+    CrawlerTest.cpp
+    )
 
-add_executable(testRunner ${SOURCES})
-find_package(GTest REQUIRED)
-target_link_libraries(testRunner PRIVATE GTest::GTest)
+target_link_libraries(
+    unit_tests
+    gtest
+    gmock_main
+    kraal
+    )
 
-# add_test(NAME myGTestCases COMMAND myGTestCases)
-
-# gtest_add_tests(
-#   TARGET testRunner
-#   )
-
-gtest_discover_tests(
-  testRunner
-  )
+include(GoogleTest)
+gtest_discover_tests(unit_tests)

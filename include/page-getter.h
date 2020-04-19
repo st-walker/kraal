@@ -4,7 +4,7 @@
 #include <curl/curl.h>
 
 
-namespace para {
+namespace kraal {
 
 class PageGetter {
 public:
@@ -18,4 +18,4 @@ private:
   char errbuf[CURL_ERROR_SIZE];
 };
 
-} // namespace para
+} // namespace kraal
