@@ -15,9 +15,9 @@ public:
   Crawler() = default;
   void crawl();
 
-  inline int url_count() const { return 0; }
-  void add_url(std::string) {};
-  // void pop_url() {urls_}/
+  inline int url_count() const { return urls_.size(); }
+  void add_url(std::string url) { urls_.push(url);};
+  void pop_url(){urls_.pop();};
 
 private:
   std::queue<std::string> urls_;
