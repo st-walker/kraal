@@ -7,6 +7,17 @@
 #include "crawler.h"
 // #include "LUrlParser.h"
 
+namespace kraal {
+
+std::string Crawler::crawl() {
+  auto url = urls_.front();
+  auto result = http_->get(url);
+  urls_.pop();
+  return result;
+}
+
+} // namespace kraal
+
 // void kraal::Crawler::crawl() {
 //   auto url = urls_.front();
 //   auto page = page_getter_.get(url);
