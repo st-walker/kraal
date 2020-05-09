@@ -81,3 +81,14 @@ TEST_F(ACrawler, ReturnsURLAsNotCrawledIfNotCrawled) {
   ASSERT_FALSE(crawler.has_crawled_url(valid_url));
 }
 
+TEST_F(ACrawler, DoesntGetSameURLTwice) {
+  auto mock_http = std::make_unique<MockHttp>();
+  EXPECT_CALL(*mock_http, get(valid_url))
+    .Times(1);
+  crawler = Crawler(std::move(mock_http));
+
+  crawler.add_url(valid_url);
+  crawler.add_url(valid_url);
+  crawler.crawl();
+  crawler.crawl();
+}
