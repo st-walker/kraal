@@ -9,11 +9,10 @@
 
 namespace kraal {
 
-std::string Crawler::crawl() {
+void Crawler::crawl() {
   auto url = urls_.front();
   auto result = http_->get(url);
   urls_.pop();
-  return result;
 }
 
 } // namespace kraal

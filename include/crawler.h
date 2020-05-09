@@ -19,7 +19,7 @@ public:
   Crawler(std::unique_ptr<Http> http = std::make_unique<CurlHttp>())
       : http_(std::move(http)){};
 
-  std::string crawl();
+  void crawl();
 
   inline int url_count() const { return urls_.size(); }
   void add_url(std::string url) { urls_.push(url);};
