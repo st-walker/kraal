@@ -19,12 +19,6 @@ class ACrawler: public Test {
 public:
   static const std::string valid_url;
   Crawler crawler;
-  std::unique_ptr<MockHttp> mock_http;
-
-  void SetUp() override {
-    mock_http = std::make_unique<MockHttp>();
-  }
-
 };
 
 const std::string ACrawler::valid_url("something");
@@ -35,12 +29,14 @@ TEST_F(ACrawler, HasNoURLsOnDefaultConstruction) {
 
 TEST_F(ACrawler, HasOneURLAfterAddingOne) {
   crawler.add_url(valid_url);
+
   ASSERT_THAT(crawler.url_count(), Eq(1));
 };
 
 TEST_F(ACrawler, HasNoURLsAfterRemovingOne) {
   crawler.add_url(valid_url);
   crawler.pop_url();
+
   ASSERT_THAT(crawler.url_count(), Eq(0));
 };
 
