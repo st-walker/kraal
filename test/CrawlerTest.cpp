@@ -55,10 +55,29 @@ TEST_F(ACrawler, MakesHTTPRequestToPage) {
 }
 
 TEST_F(ACrawler, RemovesURLAfterGettingIt) {
-  auto mock_http = std::make_unique<MockHttp>();
-
+  auto mock_http = std::make_unique<NiceMock<MockHttp>>();
   crawler = Crawler(std::move(mock_http));
+
   crawler.add_url(valid_url);
   crawler.crawl();
+
   ASSERT_THAT(crawler.url_count(), Eq(0));
 }
+
+TEST_F(ACrawler, ReturnsURLAsCrawledAfterCrawlingIt) {
+  auto mock_http = std::make_unique<NiceMock<MockHttp>>();
+  crawler = Crawler(std::move(mock_http));
+
+  crawler.add_url(valid_url);
+  crawler.crawl();
+
+  ASSERT_TRUE(crawler.has_crawled_url(valid_url));
+}
+
+TEST_F(ACrawler, ReturnsURLAsNotCrawledIfNotCrawled) {
+  auto mock_http = std::make_unique<NiceMock<MockHttp>>();
+  crawler = Crawler(std::move(mock_http));
+
+  ASSERT_FALSE(crawler.has_crawled_url(valid_url));
+}
+

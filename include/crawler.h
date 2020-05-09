@@ -4,6 +4,7 @@
 #include <queue>
 #include <string>
 #include <memory>
+#include<unordered_set>
 
 #include "gumbo.h"
 
@@ -15,6 +16,9 @@
 namespace kraal {
 
 class Crawler {
+
+protected:
+  using UrlType = std::string;
 public:
   Crawler(std::unique_ptr<Http> http = std::make_unique<CurlHttp>())
       : http_(std::move(http)){};
@@ -22,19 +26,24 @@ public:
   void crawl();
 
   inline int url_count() const { return urls_.size(); }
-  void add_url(std::string url) { urls_.push(url);};
+  void add_url(UrlType url) { urls_.push(url);};
   void pop_url(){urls_.pop();};
+
+  bool has_crawled_url(UrlType);
 
   // Crawler() = default;
 
 private:
-  std::queue<std::string> urls_;
+
+
+  std::queue<UrlType> urls_;
+  std::unordered_set<UrlType> seen_urls_;
   std::unique_ptr<Http> http_;
 
   // PageGetter page_getter_;
 
   // void push_links(GumboNode *node);
-  // std::string parse_link(const std::string &);
+  // UrlType parse_link(const UrlTypex &);
   // void search_for_links(GumboNode *node);
 };
 

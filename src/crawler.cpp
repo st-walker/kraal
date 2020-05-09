@@ -12,7 +12,12 @@ namespace kraal {
 void Crawler::crawl() {
   auto url = urls_.front();
   auto result = http_->get(url);
+  seen_urls_.insert(url);
   urls_.pop();
+}
+
+bool Crawler::has_crawled_url(Crawler::UrlType url) {
+  return seen_urls_.contains(url);
 }
 
 } // namespace kraal
