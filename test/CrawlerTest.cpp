@@ -55,8 +55,10 @@ TEST_F(ACrawler, MakesHTTPRequestToPage) {
 }
 
 TEST_F(ACrawler, RemovesURLAfterGettingIt) {
+  auto mock_http = std::make_unique<MockHttp>();
+
+  crawler = Crawler(std::move(mock_http));
   crawler.add_url(valid_url);
   crawler.crawl();
   ASSERT_THAT(crawler.url_count(), Eq(0));
-
 }
