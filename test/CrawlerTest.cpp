@@ -21,7 +21,7 @@ public:
   Crawler crawler;
 };
 
-const std::string ACrawler::valid_url("something");
+const std::string ACrawler::valid_url("www.example.com");
 
 TEST_F(ACrawler, HasNoURLsOnDefaultConstruction) {
   ASSERT_THAT(0, Eq(crawler.url_count()));
