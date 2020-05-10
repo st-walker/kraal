@@ -6,11 +6,11 @@
 class Response {
 public:
   Response() = default;
-  Response(std::string status, std::string header, std::string body)
+  Response(long status, std::string header, std::string body)
       : status_(status), header_(header), body_(body){};
 
 private:
-  std::string status_;
+  long status_;
   std::string header_;
   std::string body_;
 };
