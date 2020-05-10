@@ -5,14 +5,14 @@
 #include "gumbo.h"
 
 #include "crawler.h"
-// #include "LUrlParser.h"
+#include "response.h"
 
 namespace kraal {
 
 void Crawler::crawl() {
   auto url = urls_.front();
   if (has_crawled_url(url)) return;
-  auto result = http_->get(url);
+  auto response = http_->get(url);
   seen_urls_.insert(url);
   urls_.pop();
 }

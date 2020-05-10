@@ -2,13 +2,17 @@
 #define CURL_HTTP_H
 
 #include "http.h"
+#include "response.h"
+
 
 class CurlHttp : public Http {
 public:
   CurlHttp() = default;
   virtual ~CurlHttp(){};
-  
-  std::string get(std::string const &) const override {return std::string("");};
+
+  std::unique_ptr<Response> get(std::string const &) const override {
+    return std::make_unique<Response>();
+  };
 };
 
 
