@@ -25,6 +25,7 @@ include(cmake/FindSkyr.cmake)
 add_library(kraal STATIC
   src/page-getter.cpp
   src/crawler.cpp
+  src/link-extractor.cpp
   )
 
 target_include_directories(kraal
