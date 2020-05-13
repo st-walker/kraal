@@ -9,7 +9,6 @@
 #include "gumbo.h"
 
 #include "http.h"
-#include "page-getter.h"
 #include "curl-http.h"
 
 
