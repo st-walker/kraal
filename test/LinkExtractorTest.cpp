@@ -9,7 +9,11 @@ using namespace kraal;
 class ALinkExtractor : public Test {
 public:
   static const std::string valid_html_document;
-  LinkExtractor extractor;
+  std::unique_ptr<LinkExtractor> extractor;
+
+  void SetUp() {
+    extractor = std::make_unique<LinkExtractor>(valid_html_document);
+  }
 };
 
 const std::string ALinkExtractor::valid_html_document(R"(<!DOCTYPE html>
@@ -30,13 +34,13 @@ const std::string ALinkExtractor::valid_html_document(R"(<!DOCTYPE html>
 )");
 
 TEST_F(ALinkExtractor, ExtractsOneURLFromHTMLDocumentWithOneURL) {
-  auto links = extractor.extract(valid_html_document);
+  auto links = extractor->extract(valid_html_document);
 
   ASSERT_THAT(links.size(), Eq(1));
 }
 
 TEST_F(ALinkExtractor, ExtractsCorrectURLFromHTMLDocument) {
-  auto links = extractor.extract(valid_html_document);
+  auto links = extractor->extract(valid_html_document);
 
   ASSERT_THAT(links.at(0), Eq(std::string("example-url-string")));
 }

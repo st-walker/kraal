@@ -6,12 +6,17 @@
 
 namespace kraal {
 
+LinkExtractor::LinkExtractor(std::string const &html)
+    : output_(gumbo_parse(html.c_str())) {}
+
+LinkExtractor::~LinkExtractor() {
+  gumbo_destroy_output(&kGumboDefaultOptions, output_);
+}
+
 LinkExtractor::url_collection_type
 LinkExtractor::extract(std::string const &html) const {
-  GumboOutput *output = gumbo_parse(html.c_str());
   auto links = url_collection_type{};
-  find_links(output->root, links);
-  gumbo_destroy_output(&kGumboDefaultOptions, output);
+  find_links(output_->root, links);
   return links;
 }
 
