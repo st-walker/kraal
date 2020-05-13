@@ -18,7 +18,7 @@ void Crawler::crawl() {
 }
 
 bool Crawler::has_crawled_url(Crawler::UrlType url) {
-  return seen_urls_.contains(url);
+  return seen_urls_.find(url) != seen_urls_.end();
 }
 
 } // namespace kraal
