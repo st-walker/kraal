@@ -29,19 +29,17 @@ add_library(kraal STATIC
   )
 
 target_include_directories(kraal
-  PRIVATE
-  "${GUMBO_INCLUDE_DIRS}"
-  "${CURL_INCLUDE_DIRS}"
   PUBLIC
   "./include"
-  "${Skyr_INCLUDE_DIRS}"
+  "${GUMBO_INCLUDE_DIRS}"
+  "${CURL_INCLUDE_DIRS}"
+  "${Skyr_INCLUDE_DIR}"
   )
 
 target_link_libraries(kraal
-  PRIVATE
+  PRIVATE # PUBLIC
   "${GUMBO_LDFLAGS}"
   "${CURL_LIBRARIES}"
-  PUBLIC
   "${Skyr_LIBRARIES}"
   )
 
