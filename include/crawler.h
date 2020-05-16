@@ -1,7 +1,7 @@
 #ifndef CRAWLER_H
 #define CRAWLER_H
 
-#include <queue>
+#include <deque>
 #include <string>
 #include <memory>
 #include<unordered_set>
@@ -25,8 +25,8 @@ public:
   void crawl();
 
   inline int url_count() const { return urls_.size(); }
-  void add_url(UrlType url) { urls_.push(url);};
-  void pop_url(){urls_.pop();};
+  void add_url(UrlType url) { urls_.push_back(url);};
+  void pop_url(){urls_.pop_back();};
 
   bool has_crawled_url(UrlType);
 
@@ -35,7 +35,7 @@ public:
 private:
 
 
-  std::queue<UrlType> urls_;
+  std::deque<UrlType> urls_;
   std::unordered_set<UrlType> seen_urls_;
   std::unique_ptr<Http> http_;
 

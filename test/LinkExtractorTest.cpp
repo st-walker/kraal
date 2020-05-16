@@ -1,3 +1,7 @@
+#include <iterator>
+#include <string>
+#include <vector>
+
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -34,13 +38,15 @@ const std::string ALinkExtractor::valid_html_document(R"(<!DOCTYPE html>
 )");
 
 TEST_F(ALinkExtractor, ExtractsOneURLFromHTMLDocumentWithOneURL) {
-  auto links = extractor->extract(valid_html_document);
+  std::vector<std::string> links{};
+  extractor->extract(std::back_inserter(links));
 
   ASSERT_THAT(links.size(), Eq(1));
 }
 
 TEST_F(ALinkExtractor, ExtractsCorrectURLFromHTMLDocument) {
-  auto links = extractor->extract(valid_html_document);
+  std::vector<std::string> links{};
+  extractor->extract(std::back_inserter(links));
 
   ASSERT_THAT(links.at(0), Eq(std::string("example-url-string")));
 }
