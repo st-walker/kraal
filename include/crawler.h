@@ -19,8 +19,11 @@ class Crawler {
 protected:
   using UrlType = std::string;
 public:
-  Crawler(std::unique_ptr<Http> http = std::make_unique<CurlHttp>())
-      : http_(std::move(http)){};
+  Crawler(std::string root_url,
+          std::unique_ptr<Http> http = std::make_unique<CurlHttp>())
+      : root_url_(root_url), http_(std::move(http)) {
+    push_url(root_url);
+  };
 
   void crawl();
 
@@ -35,6 +38,7 @@ public:
 private:
 
 
+  UrlType root_url_;
   std::deque<UrlType> urls_;
   std::unordered_set<UrlType> seen_urls_;
   std::unique_ptr<Http> http_;
