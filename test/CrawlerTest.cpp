@@ -17,7 +17,7 @@ public:
 class ACrawler : public Test {
 public:
   static const std::string valid_url;
-  Crawler crawler;
+  Crawler crawler(valid_url);
 };
 
 const std::string ACrawler::valid_url("www.example.com");
