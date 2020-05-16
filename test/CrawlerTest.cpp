@@ -17,13 +17,18 @@ public:
 class ACrawler : public Test {
 public:
   static const std::string valid_url;
-  Crawler crawler(valid_url);
+  Crawler crawler;
 };
 
-const std::string ACrawler::valid_url("www.example.com");
+const std::string ACrawler::valid_url("https://www.example.com/");
 
 TEST_F(ACrawler, HasNoURLsOnDefaultConstruction) {
   ASSERT_THAT(0, Eq(crawler.url_count()));
+}
+
+TEST_F(ACrawler, HasOneURLIfInstantiatedWithOne) {
+  crawler = Crawler(valid_url);
+  ASSERT_THAT(1, Eq(crawler.url_count()));
 }
 
 TEST_F(ACrawler, HasOneURLAfterAddingOne) {
@@ -42,7 +47,7 @@ TEST_F(ACrawler, HasNoURLsAfterRemovingOne) {
 TEST_F(ACrawler, MakesHTTPRequestToPage) {
   auto mock_http = std::make_unique<MockHttp>();
   EXPECT_CALL(*mock_http, get(valid_url)).Times(1);
-  crawler = Crawler(std::move(mock_http));
+  crawler = Crawler(valid_url, std::move(mock_http));
 
   crawler.push_url(valid_url);
   crawler.crawl();
@@ -50,9 +55,8 @@ TEST_F(ACrawler, MakesHTTPRequestToPage) {
 
 TEST_F(ACrawler, RemovesURLAfterGettingIt) {
   auto mock_http = std::make_unique<NiceMock<MockHttp>>();
-  crawler = Crawler(std::move(mock_http));
+  crawler = Crawler(valid_url, std::move(mock_http));
 
-  crawler.push_url(valid_url);
   crawler.crawl();
 
   ASSERT_THAT(crawler.url_count(), Eq(0));
@@ -60,7 +64,7 @@ TEST_F(ACrawler, RemovesURLAfterGettingIt) {
 
 TEST_F(ACrawler, ReturnsURLAsCrawledAfterCrawlingIt) {
   auto mock_http = std::make_unique<NiceMock<MockHttp>>();
-  crawler = Crawler(std::move(mock_http));
+  crawler = Crawler(valid_url, std::move(mock_http));
 
   crawler.push_url(valid_url);
   crawler.crawl();
@@ -70,18 +74,16 @@ TEST_F(ACrawler, ReturnsURLAsCrawledAfterCrawlingIt) {
 
 TEST_F(ACrawler, ReturnsURLAsNotCrawledIfNotCrawled) {
   auto mock_http = std::make_unique<NiceMock<MockHttp>>();
-  crawler = Crawler(std::move(mock_http));
+  crawler = Crawler(valid_url, std::move(mock_http));
 
   ASSERT_FALSE(crawler.has_crawled_url(valid_url));
 }
 
-TEST_F(ACrawler, DoesntGetSameURLTwice) {
+TEST_F(ACrawler, DoesntCrawlSameURLTwice) {
   auto mock_http = std::make_unique<MockHttp>();
   EXPECT_CALL(*mock_http, get(valid_url)).Times(1);
-  crawler = Crawler(std::move(mock_http));
+  crawler = Crawler(valid_url, std::move(mock_http));
 
-  crawler.push_url(valid_url);
-  crawler.push_url(valid_url);
   crawler.crawl();
   crawler.crawl();
 }

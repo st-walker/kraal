@@ -17,12 +17,12 @@ namespace kraal {
 class Crawler {
 public:
   using UrlType = std::string;
-
+  Crawler() = default;
   Crawler(std::string root_url,
           std::unique_ptr<Http> http = std::make_unique<CurlHttp>())
       : root_url_(root_url), http_(std::move(http)) {
     push_url(root_url);
-  };
+  }
 
   void crawl();
 
@@ -33,7 +33,7 @@ public:
   bool has_crawled_url(UrlType);
 
 private:
-  UrlType root_url_;
+  skyr::url root_url_;
   std::deque<UrlType> urls_;
   std::unordered_set<UrlType> seen_urls_;
   std::unique_ptr<Http> http_;
