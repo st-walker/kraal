@@ -25,8 +25,8 @@ public:
   void crawl();
 
   inline int url_count() const { return urls_.size(); }
-  void add_url(UrlType url) { urls_.push_back(url);};
-  void pop_url(){urls_.pop_back();};
+  void push_url(UrlType url) { urls_.push_back(url);};
+  void pop_url(){urls_.pop_front();};
 
   bool has_crawled_url(UrlType);
 

@@ -16,7 +16,7 @@ void Crawler::crawl() {
   if (has_crawled_url(url))
     return;
   auto response = http_->get(url);
-  urls_.pop_back();
+  urls_.pop_front();
 
   LinkExtractor extractor{response.body};
   extractor.extract(std::back_inserter(urls_));
