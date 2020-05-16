@@ -11,7 +11,7 @@ using namespace kraal;
 
 class MockHttp: public Http {
 public:
-  MOCK_METHOD(std::unique_ptr<Response>, get, (std::string const &), (const override));
+  MOCK_METHOD(Response, get, (std::string const &), (const override));
 };
 
 

@@ -19,7 +19,7 @@ size_t writer(char *ptr, size_t size, size_t nmemb, std::string *data) {
 
 namespace kraal {
 
-std::unique_ptr<Response> CurlHttp::get(std::string const &url) const {
+Response CurlHttp::get(std::string const &url) const {
   long response_code = 0;
   CURLcode res;
   std::string header;
@@ -50,6 +50,6 @@ std::unique_ptr<Response> CurlHttp::get(std::string const &url) const {
         fprintf(stderr, "%s\n", curl_easy_strerror(res));
     }
   }
-  return std::make_unique<Response>(response_code, header, body);
+  return Response{response_code, header, body};
 }
 } // namespace kraal

@@ -13,7 +13,7 @@ public:
   CurlHttp() { curl = curl_easy_init(); }
   virtual ~CurlHttp() { curl_easy_cleanup(curl); }
 
-  std::unique_ptr<Response> get(std::string const &) const override;
+  Response get(std::string const &) const override;
 
 private:
   CURL *curl;
