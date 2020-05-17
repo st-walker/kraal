@@ -3,6 +3,7 @@ add_executable(
     unit_tests
     CrawlerTest.cpp
     LinkExtractorTest.cpp
+    url-test.cpp
     )
 
 target_link_libraries(

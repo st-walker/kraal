@@ -26,6 +26,7 @@ add_library(kraal STATIC
   src/crawler.cpp
   src/curl-http.cpp
   src/link-extractor.cpp
+  src/url.cpp
   )
 
 target_include_directories(kraal
