@@ -3,8 +3,6 @@
 #include <queue>
 #include <string>
 
-#include "gumbo.h"
-
 #include "crawler.h"
 #include "link-extractor.h"
 #include "response.h"
