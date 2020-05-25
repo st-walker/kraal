@@ -59,4 +59,7 @@ if (kraal_BUILD_TESTS)
     )
   enable_testing()
   add_subdirectory(test)
+  add_custom_target(unit
+    COMMAND ${CMAKE_BINARY_DIR}/test/unit_tests --gtest_color=true
+    )
 endif()
