@@ -10,43 +10,58 @@
 using namespace testing;
 using namespace kraal;
 
-static const std::string absolute("https://www.example.com/bar/baz");
+static const std::string absolute_url("https://www.example.com/bar/baz");
 static const std::string root_url("https://www.example.com/");
-static const std::string relative_fragment("bar/baz");
-static const std::string protocol_relative("//example.com/bar/baz");
-static const std::string root_relative_fragment("/bar/baz");
+static const std::string relative_url("bar/baz");
+static const std::string protocol_relative_url("//www.example.com/bar/baz");
+static const std::string root_relative_url("/bar/baz");
 
-TEST(URLQuerying, IsProtocolRelativeReturnsTrueForProtocolRelativeURL) {
-  ASSERT_TRUE(is_protocol_relative(protocol_relative));
+std::string type_to_name(URLType t) {
+  switch(t) {
+  case(URLType::ABSOLUTE):
+    return std::string("absolute");
+    break;
+  case(URLType::RELATIVE):
+    return std::string("relative");
+    break;
+  case (URLType::PROTOCOL_RELATIVE):
+    return std::string("protocol_relative");
+    break;
+  case(URLType::ROOT_RELATIVE):
+    return std::string("root_relative");
+    break;
+  }
 }
+  
 
-TEST(URLQuerying, IsProtocolRelativeReturnsFalseForNonProtocolRelativeURL) {
-  ASSERT_FALSE(is_protocol_relative(absolute));
+TEST(URLQuerying, ReturnsCorrectURLType) {
+  ASSERT_THAT(get_url_type(absolute_url), URLType::ABSOLUTE) << "Ohdear000";
+  ASSERT_THAT(get_url_type(relative_url), URLType::RELATIVE)
+    << type_to_name(get_url_type(relative_url));
+  ASSERT_THAT(get_url_type(protocol_relative_url), URLType::PROTOCOL_RELATIVE);
+  ASSERT_THAT(get_url_type(root_relative_url), URLType::ROOT_RELATIVE);
+
 }
-
-TEST(URLQuerying, IsAbsoluteReturnsTrueForAbsoluteURL) {
-  ASSERT_TRUE(is_absolute_url(absolute));
-}
-
-TEST(URLQuerying, IsAbsoluteReturnsFalseForRelativeURL) {
-  ASSERT_FALSE(is_absolute_url(relative_fragment));
-}
-
 
 TEST(URLExpansion, RelativeToAbsolute) {
-  auto url = expand_url(root_url, relative_fragment);
+  auto url = expand_relative_url(root_url, relative_url);
 
-  ASSERT_THAT(url, StrEq(absolute));
+  ASSERT_THAT(url, StrEq(absolute_url));
 }
 
-TEST(URLExpansion, DISABLED_ProtocolRelativeToAbsolute) {
-  auto url = expand_protocol_relative_url(root_url, protocol_relative);
+TEST(URLExpansion, ProtocolRelativeToAbsolute) {
+  auto url = expand_protocol_relative_url("https", protocol_relative_url);
 
-  ASSERT_THAT(url, StrEq(absolute));
+  ASSERT_THAT(url, StrEq(absolute_url));
 }
 
 TEST(URLExpansion, RootRelativeToAbsolute) {
-  auto url = expand_url(root_url, root_relative_fragment);
+  auto url = expand_relative_url(root_url, root_relative_url);
 
-  ASSERT_THAT(url, StrEq(absolute));
+  ASSERT_THAT(url, StrEq(absolute_url));
+}
+
+TEST(URLQuerying, ReturnsHostname) {
+  ASSERT_THAT(get_hostname("https://www.example.com/"), Eq("www.example.com"));
+  ASSERT_THAT(get_hostname("https://example.com/"), Eq("example.com"));
 }

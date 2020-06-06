@@ -85,5 +85,6 @@ TEST_F(ACrawler, DoesntCrawlSameURLTwice) {
   crawler = Crawler(valid_url, std::move(mock_http));
 
   crawler.crawl();
+  crawler.push_url(valid_url);
   crawler.crawl();
 }

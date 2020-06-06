@@ -33,7 +33,7 @@ public:
   bool has_crawled_url(UrlType);
 
 private:
-  skyr::url root_url_;
+  std::string root_url_;
   std::deque<UrlType> urls_;
   std::unordered_set<UrlType> seen_urls_;
   std::unique_ptr<Http> http_;
